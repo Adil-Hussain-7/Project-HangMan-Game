@@ -3,11 +3,20 @@ import random
 import tkinter as tk
 from tkinter import ttk
 from itertools import cycle
-import nltk #Install The Module using pip installation
-nltk.download('words')
-from nltk.corpus import words
+from random_word import RandomWords
 
-word_list = words.words()
+def get_short_random_word(max_length=8):
+    r = RandomWords()
+    for _ in range(100):  # Try up to 100 times to find a valid word
+        word = r.get_random_word()
+        if len(word) <= max_length:
+            return word
+    return None  # Return None if no valid word is found
+
+short_word = get_short_random_word()
+if short_word:
+    word_list = [short_word]
+
 
 class TKinter_Hangman():
     def __init__(self):
