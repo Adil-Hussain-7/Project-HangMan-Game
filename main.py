@@ -3,20 +3,6 @@ import random
 import tkinter as tk
 from tkinter import ttk
 from itertools import cycle
-from random_word import RandomWords
-
-def get_short_random_word(max_length=8):
-    r = RandomWords()
-    for _ in range(100):  # Try up to 100 times to find a valid word
-        word = r.get_random_word()
-        if len(word) <= max_length:
-            return word
-    return None  # Return None if no valid word is found
-
-short_word = get_short_random_word()
-if short_word:
-    word_list = [short_word]
-
 
 class TKinter_Hangman():
     def __init__(self):
@@ -81,7 +67,10 @@ class TKinter_Hangman():
 
         
     def list_of_words(self):
-        return random.choice(word_list)
+        with open ("Words_List.txt", "r") as file: #Add the Words_List.txt file as same folder as this main.py File Located
+            words_List = file.read().split(",")
+        
+        return random.choice(words_List)
 
     def update_display(self):
         display = "".join([letter if letter in self.guessed_letters else "_" for letter in self.words])
@@ -109,23 +98,23 @@ class TKinter_Hangman():
         self.guessed_letters.add(guess)
         
         if guess in self.words:
-            self.indications.config(text=f"Good Guess! The Word {guess} you Entered is Right!")
+            self.indications.config(text=f"Good Guess! The Word {guess.upper()} you Entered is Right!")
             
         else:
-            self.indications.config(text=f"Wrong Guess! The Word {guess} you Entered is Wrong!")
+            self.indications.config(text=f"Wrong Guess! The Word {guess.upper()} you Entered is Wrong!")
             self.Attempts -= 1
             self.Lose_def()
         
         self.update_display()
             
         if all(letter in self.guessed_letters for letter in self.words):
-            self.indications.config(text=f"Woohoo! You Won the Game, Congrats!,\nAlthough the Word is {self.words}")
+            self.indications.config(text=f"Woohoo! You Won the Game, Congrats!,\nAlthough the Word is {self.words.upper()}")
             self.endgame()
             self.win_def()
             
             
         elif self.Attempts == 0:
-            self.indications.config(text=f"Game Over! You ran out of Attempts,\nAlthough the Word is {self.words}")
+            self.indications.config(text=f"Game Over! You ran out of Attempts,\nAlthough the Word is {self.words.upper()}")
             self.endgame()
             self.Final_act()
             
@@ -135,14 +124,14 @@ class TKinter_Hangman():
     
         
     def Lose_def(self):
-    # Pick a random cycle of loss images
+
         chosen_loss_cycle = random.choice([self.Lose_1, self.Lose_2, self.Lose_3, self.Lose_4])
     
-    # Iterate through the chosen cycle and display the images
+
         for img in chosen_loss_cycle:
             self.canvas.itemconfig(self.current_Image_id, image=img)
             self.root.update()
-            self.root.after(500)  # 500 milliseconds delay between images
+            self.root.after(500)
 
     def Final_act(self):  
         
