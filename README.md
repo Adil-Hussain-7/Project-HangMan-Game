@@ -3,7 +3,7 @@ Welcome to the Hangman game built with Python's tkinter library and the nltk cor
 
 **Features**
 **Interactive GUI**: Built using Tkinter for a smooth user experience.
-**Word List**: Uses a large list of English words from the nltk corpus.
+**Word List**: Uses a large list of English words from our Word.txt File.
 **Visual Feedback**: Displays images for different game states (win, loss, etc.).
 **Restart Functionality**: Allows players to restart the game after it ends.
 
